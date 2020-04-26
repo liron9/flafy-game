@@ -6,7 +6,7 @@ namespace flafy_game
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello Liron");
         }
     }
 }
