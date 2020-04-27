@@ -47,7 +47,6 @@ namespace flafy_game
         
 
 
-        // static Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         static string[,] player ={ { " ", " ", " ", " ", " ", " ", " ", "_", "_", "_", "_", "_", "_", " " },
                                    { " ", "_", "_", " ", " ", " ", "|", " ", "o", " ", " ", " ", "o", "|" },
