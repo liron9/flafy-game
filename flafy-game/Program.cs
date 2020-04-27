@@ -76,16 +76,21 @@ namespace flafy_game
             int randomnumber;
 
             Random randomholeselector = new Random();
-            randomnumber = randomholeselector.Next(1,37);
+            randomnumber = randomholeselector.Next(4,34);
             
             
                for (int i = 0; i < pipe.GetLength(1); i++)
                 {
                     for (int j = 0; j < pipe.GetLength(0); j++)
                     {
+                        
+                       if (!(j <= randomnumber + 3 && j >= randomnumber - 3))
+                       {
                         Console.SetCursorPosition(179, j + 1);
                         Console.Write(pipe[j, i]);
+                        
 
+                       }
                     }
                 }
             
