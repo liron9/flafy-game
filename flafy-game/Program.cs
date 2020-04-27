@@ -102,15 +102,18 @@ namespace flafy_game
                                    { " ", "‾", "‾", " ", " ", " ", "|", " ", " ", " ", "0", " ", " ", "|" },
                                    { " ", " ", " ", " ", " ", " ", " ", "‾", "‾", "‾", "‾", "‾", "‾", " " } };
         //liron
-        static void PlayerSpawn(int x, int y)
+        static int xPlayer = 20; 
+        static int yPlayer = 17;
+        static void PlayerSpawn()
         {
-            Console.SetCursorPosition(x, y);
+
+            Console.SetCursorPosition(xPlayer, yPlayer);
 
             for (int i = 0; i < player.GetLength(0); i++)
             {
                 for (int j = 0; j < player.GetLength(1); j++)
                 {
-                    Console.SetCursorPosition(j + x,i + y);
+                    Console.SetCursorPosition(j + xPlayer, i + yPlayer);
                     Console.Write(player[i,j]);
                 }
                 Console.WriteLine(" ");
@@ -120,9 +123,8 @@ namespace flafy_game
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-            PlayerSpawn(20, 17);
-           
+            
+            PlayerSpawn();
             windowsize();
             barrier();
             pipespawn();
