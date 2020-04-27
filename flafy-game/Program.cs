@@ -4,16 +4,16 @@ namespace flafy_game
 {
     class Program
     {
-        static void PlayerView(int x, int y)
-        {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+      // static Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            string[,] player = { { " ", " ", " ", " ", " ", " ", " ", "_", "_", "_", "_", "_", "_", " " },
-                                 { " ", "_", "_", " ", " ", " ", "|", " ", "o", " ", " ", " ", "o", "|" },
-                                 { " ", " ", " ", "|", "-", "-", "|", " ", " ", " ", "^", " ", " ", "|" },
-                                 { " ", "‾", "‾", " ", " ", " ", "|", " ", " ", " ", "0", " ", " ", "|" },
-                                 { " ", " ", " ", " ", " ", " ", " ", "‾", "‾", "‾", "‾", "‾", "‾", " " } };
-           
+        static string[,] player ={ { " ", " ", " ", " ", " ", " ", " ", "_", "_", "_", "_", "_", "_", " " },
+                                   { " ", "_", "_", " ", " ", " ", "|", " ", "o", " ", " ", " ", "o", "|" },
+                                   { " ", " ", " ", "|", "-", "-", "|", " ", " ", " ", "^", " ", " ", "|" },
+                                   { " ", "‾", "‾", " ", " ", " ", "|", " ", " ", " ", "0", " ", " ", "|" },
+                                   { " ", " ", " ", " ", " ", " ", " ", "‾", "‾", "‾", "‾", "‾", "‾", " " } };
+
+        static void PlayerSpawn(int x, int y)
+        {
             Console.SetCursorPosition(x, y);
 
             for (int i = 0; i < player.GetLength(0); i++)
@@ -28,9 +28,11 @@ namespace flafy_game
         }
         static void Main(string[] args)
         {
-            PlayerView(8, 11);
-            Console.ReadKey();
+            PlayerSpawn(8, 11);
 
+           while (Console.ReadKey().Key != ConsoleKey.Enter)
+            {
+            }
         }
     }
 }
