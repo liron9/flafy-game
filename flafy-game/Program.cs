@@ -4,7 +4,6 @@ namespace flafy_game
 {
     class Program
     {
-      // static Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         static string[,] player ={ { " ", " ", " ", " ", " ", " ", " ", "_", "_", "_", "_", "_", "_", " " },
                                    { " ", "_", "_", " ", " ", " ", "|", " ", "o", " ", " ", " ", "o", "|" },
@@ -28,6 +27,8 @@ namespace flafy_game
         }
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             PlayerSpawn(8, 11);
 
            while (Console.ReadKey().Key != ConsoleKey.Enter)
