@@ -4,21 +4,22 @@ namespace flafy_game
 {
     class Program
     {
-        
+        //ivan
         static void windowsize()
         {
-            Console.WindowHeight = 30;
-            Console.WindowWidth = 150;
+            Console.WindowHeight = 40;
+            Console.WindowWidth = 180;
         }
 
+        //ivan
         static void barrier()
         {
-            string[] bothbarriers = new string[150];
+            string[] bothbarriers = new string[180];
 
             //bottom barrier
             for (int i = 0; i < bothbarriers.Length; i++)
             {
-                Console.SetCursorPosition(i, 29);
+                Console.SetCursorPosition(i, 39);
                 Console.Write("#");
             }
             //upper barrier
@@ -29,31 +30,78 @@ namespace flafy_game
             }
         }
 
-        static void pipe()
+        //ivan
+        static string[,] pipe = { {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},
+                                  {"|"},};
+        //ivan
+        static void pipespawn()
         {
+            
             int randomnumber;
 
-            Random randompipeplace = new Random();
-            randomnumber = randompipeplace.Next(20, 150);
+            Random randomholeselector = new Random();
+            randomnumber = randomholeselector.Next(1,37);
+            
+            
+               for (int i = 0; i < pipe.GetLength(1); i++)
+                {
+                    for (int j = 0; j < pipe.GetLength(0); j++)
+                    {
+                        Console.SetCursorPosition(179, j + 1);
+                        Console.Write(pipe[j, i]);
 
-            for (int i = 0; i < 28; i++)
-            {
-                Console.SetCursorPosition(randomnumber, i + 1);
-                Console.Write("|");
-            }
-
+                    }
+                }
+            
 
         }
         
 
 
-
+        
+        //liron
         static string[,] player ={ { " ", " ", " ", " ", " ", " ", " ", "_", "_", "_", "_", "_", "_", " " },
                                    { " ", "_", "_", " ", " ", " ", "|", " ", "o", " ", " ", " ", "o", "|" },
                                    { " ", " ", " ", "|", "-", "-", "|", " ", " ", " ", "^", " ", " ", "|" },
                                    { " ", "‾", "‾", " ", " ", " ", "|", " ", " ", " ", "0", " ", " ", "|" },
                                    { " ", " ", " ", " ", " ", " ", " ", "‾", "‾", "‾", "‾", "‾", "‾", " " } };
-
+        //liron
         static void PlayerSpawn(int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -73,11 +121,11 @@ namespace flafy_game
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            PlayerSpawn(8, 11);
+            PlayerSpawn(20, 17);
            
             windowsize();
             barrier();
-            pipe();
+            pipespawn();
             
 
             while (Console.ReadKey().Key != ConsoleKey.Enter)
