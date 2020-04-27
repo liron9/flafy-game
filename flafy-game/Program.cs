@@ -4,7 +4,50 @@ namespace flafy_game
 {
     class Program
     {
-      // static Console.OutputEncoding = System.Text.Encoding.UTF8;
+        
+        static void windowsize()
+        {
+            Console.WindowHeight = 30;
+            Console.WindowWidth = 150;
+        }
+
+        static void barrier()
+        {
+            string[] bothbarriers = new string[150];
+
+            //bottom barrier
+            for (int i = 0; i < bothbarriers.Length; i++)
+            {
+                Console.SetCursorPosition(i, 29);
+                Console.Write("#");
+            }
+            //upper barrier
+            for (int j = 0; j < bothbarriers.Length; j++)
+            {
+                Console.SetCursorPosition(j, 0);
+                Console.Write("#");
+            }
+        }
+
+        static void pipe()
+        {
+            int randomnumber;
+
+            Random randompipeplace = new Random();
+            randomnumber = randompipeplace.Next(20, 150);
+
+            for (int i = 0; i < 28; i++)
+            {
+                Console.SetCursorPosition(randomnumber, i + 1);
+                Console.Write("|");
+            }
+
+
+        }
+        
+
+
+        // static Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         static string[,] player ={ { " ", " ", " ", " ", " ", " ", " ", "_", "_", "_", "_", "_", "_", " " },
                                    { " ", "_", "_", " ", " ", " ", "|", " ", "o", " ", " ", " ", "o", "|" },
@@ -26,11 +69,17 @@ namespace flafy_game
                 Console.WriteLine(" ");
             } 
         }
+
         static void Main(string[] args)
         {
             PlayerSpawn(8, 11);
+           
+            windowsize();
+            barrier();
+            pipe();
+            
 
-           while (Console.ReadKey().Key != ConsoleKey.Enter)
+            while (Console.ReadKey().Key != ConsoleKey.Enter)
             {
             }
         }
