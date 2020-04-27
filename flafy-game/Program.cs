@@ -73,10 +73,10 @@ namespace flafy_game
         static void pipespawn()
         {
             
-            int randomnumber;
+            int centerofthehole;
 
             Random randomholeselector = new Random();
-            randomnumber = randomholeselector.Next(4,34);
+            centerofthehole = randomholeselector.Next(4,34);
             
             
                for (int i = 0; i < pipe.GetLength(1); i++)
@@ -84,12 +84,10 @@ namespace flafy_game
                     for (int j = 0; j < pipe.GetLength(0); j++)
                     {
                         
-                       if (!(j <= randomnumber + 3 && j >= randomnumber - 3))
-                       {
+                       if (!(j <= centerofthehole + 3 && j >= centerofthehole - 3))
+                       {                 
                         Console.SetCursorPosition(179, j + 1);
-                        Console.Write(pipe[j, i]);
-                        
-
+                        Console.Write(pipe[j, i]);                 
                        }
                     }
                 }
