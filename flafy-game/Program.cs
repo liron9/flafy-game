@@ -109,6 +109,7 @@ namespace flafy_game
         //liron
         static int xPlayer = 20; 
         static int yPlayer = 17;
+
         static void PlayerSpawn()
         {
 
@@ -125,19 +126,53 @@ namespace flafy_game
             } 
         }
 
+        static void PlayerMovment()
+        {
+            PlayerSpawn();
+
+            int Endless = 0; //this variable will be changed to "when you loss the game"
+
+            ConsoleKeyInfo playerKeyInfo;
+            
+            do
+            {
+                playerKeyInfo = Console.ReadKey(true);
+                Console.Clear();
+
+                switch (playerKeyInfo.Key)
+                {
+                    case ConsoleKey.W:
+                        yPlayer--;
+                        PlayerSpawn();
+                        break;
+                    case ConsoleKey.S:
+                        yPlayer++;
+                        PlayerSpawn();
+                        break;
+                    case ConsoleKey.A:
+                        xPlayer--;
+                        PlayerSpawn();
+                        break;
+                    case ConsoleKey.D:
+                        xPlayer++;
+                        PlayerSpawn();
+                        break;
+                } 
+
+                
+            } while (Endless == 0);
+            
+
+        }
+
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            
-            PlayerSpawn();
             windowsize();
             barrier();
             pipespawn();
-            
+            PlayerMovment();
 
-            while (Console.ReadKey().Key != ConsoleKey.Enter)
-            {
-            }
         }
     }
 }
