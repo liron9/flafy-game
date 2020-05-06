@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace flafy_game
 {
@@ -70,7 +71,7 @@ namespace flafy_game
                                   {"|"},
                                   {"|"},};
 
-        //ivan    This fucntion spawn one pipe with a random hole in her
+        //ivan    This fucntion spawn one pipe with a random hole in ther
         static void pipespawn()
         {
             
@@ -128,7 +129,19 @@ namespace flafy_game
                 Console.WriteLine(" ");
             }
         }
+        //liron   This is a emptry line that erase the leftovers from the player
+        static string[] emptyLine = { " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " };
 
+        //liron   This function erae the leftovers from the player when he moves
+        static void LeftoversEraser(int TheYCordinateOfThePlayer)
+        {
+            Console.SetCursorPosition(xPlayer, TheYCordinateOfThePlayer);
+           
+            for (int i = 0; i < emptyLine.Length; i++)
+            {
+                Console.Write(emptyLine[i]);
+            }
+        }
         //liron   This function is moving the player up,down,right and left 
         static void PlayerMovment()
         {
@@ -147,10 +160,12 @@ namespace flafy_game
                     case ConsoleKey.W:
                         yPlayer--;
                         PlayerSpawn();
+                        LeftoversEraser(yPlayer + 5);
                         break;
                     case ConsoleKey.S:
                         yPlayer++;
                         PlayerSpawn();
+                        LeftoversEraser(yPlayer - 1);
                         break;
                     case ConsoleKey.A:
                         xPlayer--;
@@ -180,6 +195,7 @@ namespace flafy_game
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.CursorVisible = false;
 
             ThWholeGame();
         }
