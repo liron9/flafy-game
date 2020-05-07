@@ -1,18 +1,48 @@
 ﻿using System;
 using System.Threading;
-
+using System.Timers;
 namespace flafy_game
 {
     class Program
     {
-        //ivan    This function sets the size of the game
+        //Timer
+        static System.Timers.Timer Timer;
+
+        //This function creates pipes every 5 seconds
+        static void PipesSpawn()
+        {
+            Timer = new System.Timers.Timer(5000);
+            Timer.Elapsed += PipeMovmentWithTimer;
+            Timer.AutoReset = true;
+            Timer.Enabled = true;
+        }
+
+        static void PipeMovmentWithTimer(Object source, ElapsedEventArgs e)
+        {
+            Timer = new System.Timers.Timer(250);
+            Timer.Elapsed += PipeMovment;
+            Timer.AutoReset = true;
+            Timer.Enabled = true;
+
+        }
+
+        static void PipeMovment(Object source, ElapsedEventArgs e)
+        {   
+                PipePrinter();
+                xPipe--;
+               // Console.SetCursorPosition(xPipe, 1);
+
+        }
+
+
+        //This function sets the size of the game
         static void windowsize()
         {
             Console.WindowHeight = 40;
             Console.WindowWidth = 180;
         }
 
-        //ivan    This function sets the borders of the game
+        //This function sets the borders of the game
         static void borders()
         {
             string[] bothbarriers = new string[180];
@@ -31,8 +61,8 @@ namespace flafy_game
             }
         }
 
-        //ivan    This is how the pipe looks like
-        static string[,] pipe = { {"|"},
+        //This is how the pipe looks like
+        static string[,] pipeView = { {"|"},
                                   {"|"},
                                   {"|"},
                                   {"|"},
@@ -71,49 +101,65 @@ namespace flafy_game
                                   {"|"},
                                   {"|"},};
 
-        //ivan    This fucntion spawn one pipe with a random hole in ther
-        static void pipespawn()
+        static int[,] pipesInfo = new int[5, 2];     //the array that contains the info about the pipes  1 coloum is the random hole and the other coloum is the pipe location.
+                                                     // 1 function pickes a random hole              the other function prints the pipe
+        
+        static int centerOfHole = 0; //the var for the funtiob below
+        static int pipeCounter = 0; // a line in the pipe info array
+        //This funtion pickes a random hole in a pipe
+        static void RandomHole()
         {
+            Random randomholeselector = new Random();             
+            centerOfHole = randomholeselector.Next(4, 34);
             
-            int randomnumber;
+            pipesInfo[pipeCounter, 0] = centerOfHole;
+        }
 
-            Random randomholeselector = new Random();
-            randomnumber = randomholeselector.Next(4,34);
-            
-            
-               for (int i = 0; i < pipe.GetLength(1); i++)
+        //This fucntion spawn one pipe with a random hole in ther
+        static int xPipe = 179;
+        static void PipePrinter()   // <<<< int pipe 
+        {
+            while (pipeCounter < 5)
+            {
+                RandomHole();
+
+                for (int i = 0; i < pipeView.GetLength(1); i++)
                 {
-                    for (int j = 0; j < pipe.GetLength(0); j++)
+                    for (int j = 0; j < pipeView.GetLength(0); j++)
                     {
-                        
-                       if (!(j <= randomnumber + 3 && j >= randomnumber - 3))
-                       {
-                        Console.SetCursorPosition(179, j + 1);
-                        Console.Write(pipe[j, i]);
-                        
 
-                       }
+                        if (!(j <= centerOfHole + 3 && j >= centerOfHole - 3))
+                        {
+                            Console.SetCursorPosition(xPipe, j + 1);
+                            Console.Write(pipeView[j, i]);
+
+
+                        }
                     }
                 }
-            
+
+                pipesInfo[pipeCounter, 1] = xPipe;
+                pipeCounter++;
+            }
+            pipeCounter = 0;
 
         }
-        
 
 
-        
-        //liron   This is how the player looks like
+
+
+        //This is how the player looks like
         static string[,] player ={ { " ", " ", " ", " ", " ", " ", " ", "_", "_", "_", "_", "_", "_", " " },
                                    { " ", "_", "_", " ", " ", " ", "|", " ", "o", " ", " ", " ", "o", "|" },
                                    { " ", " ", " ", "|", "-", "-", "|", " ", " ", " ", "^", " ", " ", "|" },
                                    { " ", "‾", "‾", " ", " ", " ", "|", " ", " ", " ", "0", " ", " ", "|" },
                                    { " ", " ", " ", " ", " ", " ", " ", "‾", "‾", "‾", "‾", "‾", "‾", " " } };
 
-        //liron   These are the coordinates of the player spawn 
+        //These are the coordinates of the player spawn 
         static int xPlayer = 20; 
         static int yPlayer = 17;
 
-        //liron   This function spawnes the player in the coordinates that mentioned above
+        //This function spawnes the player in the coordinates that mentioned above
         static void PlayerSpawn()
         {
 
@@ -129,10 +175,13 @@ namespace flafy_game
                 Console.WriteLine(" ");
             }
         }
-        //liron   This is a emptry line that erase the leftovers from the player
+
+        
+
+        //This is a emptry line that erase the leftovers from the player
         static string[] emptyLine = { " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " };
 
-        //liron   This function erae the leftovers from the player when he moves
+        //This function erae the leftovers from the player when he moves
         static void LeftoversEraser(int TheYCordinateOfThePlayer)
         {
             Console.SetCursorPosition(xPlayer, TheYCordinateOfThePlayer);
@@ -142,7 +191,8 @@ namespace flafy_game
                 Console.Write(emptyLine[i]);
             }
         }
-        //liron   This function is moving the player up,down,right and left 
+
+        //This function is moving the player up,down,right and left 
         static void PlayerMovment()
         {
             PlayerSpawn();
@@ -183,12 +233,12 @@ namespace flafy_game
 
         }
 
-        //liron   This fucntion contains all the other functions and running the game
+        //This fucntion contains all the other functions and running the game
         static void ThWholeGame()
         {
             windowsize();
             borders();
-            pipespawn();
+            PipesSpawn();
             PlayerMovment();
         }
 
