@@ -6,31 +6,31 @@ namespace flafy_game
     class Program
     {
         //Timer
-        static System.Timers.Timer Timer;
+        static System.Timers.Timer newPipeTimer;
+        static System.Timers.Timer printPipeTimer;
+
 
         //This function creates pipes every 5 seconds
         static void PipesSpawn()
         {
-            Timer = new System.Timers.Timer(5000);
-            Timer.Elapsed += PipeMovmentWithTimer;
-            Timer.AutoReset = true;
-            Timer.Enabled = true;
-        }
+            newPipeTimer = new System.Timers.Timer(5000);
+            newPipeTimer.Elapsed += PipeCreator;
+            newPipeTimer.AutoReset = true;
+            newPipeTimer.Enabled = true;
 
-        static void PipeMovmentWithTimer(Object source, ElapsedEventArgs e)
+            printPipeTimer = new System.Timers.Timer(250);
+            printPipeTimer.Elapsed += PipeMovment;
+            printPipeTimer.AutoReset = true;
+            printPipeTimer.Enabled = true;
+        }
+        static void PipeCreator(Object source, ElapsedEventArgs e)
         {
-            Timer = new System.Timers.Timer(250);
-            Timer.Elapsed += PipeMovment;
-            Timer.AutoReset = true;
-            Timer.Enabled = true;
-
+               RandomHole();
         }
-
         static void PipeMovment(Object source, ElapsedEventArgs e)
         {   
                 PipePrinter();
-                xPipe--;
-               // Console.SetCursorPosition(xPipe, 1);
+                 PlayerSpawn();
 
         }
 
@@ -100,48 +100,92 @@ namespace flafy_game
                                   {"|"},
                                   {"|"},
                                   {"|"},};
+        //This is the array that erase the pipe leftover
+        static string[,] pipeLeftoverEraser = { {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},
+                                  {" "},};                               //cleans the eraser
 
         static int[,] pipesInfo = new int[5, 2];     //the array that contains the info about the pipes  1 coloum is the random hole and the other coloum is the pipe location.
                                                      // 1 function pickes a random hole              the other function prints the pipe
         
         static int centerOfHole = 0; //the var for the funtiob below
-        static int pipeCounter = 0; // a line in the pipe info array
         //This funtion pickes a random hole in a pipe
         static void RandomHole()
         {
+            int pipeCounter = 0;
             Random randomholeselector = new Random();             
-            centerOfHole = randomholeselector.Next(4, 34);
-            
+            centerOfHole = randomholeselector.Next(4, 34);                          //הפונקציה הזאת מייצרת פייפ כל 250 מילישניות
+                                                                                    //צריך לסרוק את את טבלת המידע ולייצר את הפייפ רק ברגע שמצאנו אפס במיקום של הפייפ
             pipesInfo[pipeCounter, 0] = centerOfHole;
+            pipesInfo[pipeCounter, 1] = xPipe;
+
         }
 
         //This fucntion spawn one pipe with a random hole in ther
         static int xPipe = 179;
         static void PipePrinter()   // <<<< int pipe 
         {
+            int pipeCounter = 0;
+
             while (pipeCounter < 5)
             {
-                RandomHole();
-
-                for (int i = 0; i < pipeView.GetLength(1); i++)
+                if (pipesInfo[pipeCounter,1] > 0)
                 {
-                    for (int j = 0; j < pipeView.GetLength(0); j++)
+                    for (int i = 0; i < pipeView.GetLength(1); i++)
                     {
+                        for (int j = 0; j < pipeView.GetLength(0); j++)
+                        {                                                                  //the pipe is printing only when his X location is 0
 
-                        if (!(j <= centerOfHole + 3 && j >= centerOfHole - 3))
-                        {
-                            Console.SetCursorPosition(xPipe, j + 1);
-                            Console.Write(pipeView[j, i]);
+                            if (!(j <= centerOfHole + 3 && j >= centerOfHole - 3))
+                            {
+                                Console.SetCursorPosition(pipesInfo[pipeCounter, 1], j + 1);
+                                Console.Write(pipeView[j, i]);
 
 
+                            }
                         }
                     }
-                }
+                    pipesInfo[pipeCounter, 1]--;
 
-                pipesInfo[pipeCounter, 1] = xPipe;
+                }
                 pipeCounter++;
+
             }
-            pipeCounter = 0;
 
         }
 
@@ -195,7 +239,7 @@ namespace flafy_game
         //This function is moving the player up,down,right and left 
         static void PlayerMovment()
         {
-            PlayerSpawn();
+            //PlayerSpawn();
 
             int Endless = 0; //this variable will be changed to "when you loss the game"
 
@@ -209,21 +253,21 @@ namespace flafy_game
                 {
                     case ConsoleKey.W:
                         yPlayer--;
-                        PlayerSpawn();
+                        //PlayerSpawn();
                         LeftoversEraser(yPlayer + 5);
                         break;
                     case ConsoleKey.S:
                         yPlayer++;
-                        PlayerSpawn();
+                      //  PlayerSpawn();
                         LeftoversEraser(yPlayer - 1);
                         break;
                     case ConsoleKey.A:
                         xPlayer--;
-                        PlayerSpawn();
+                   //     PlayerSpawn();
                         break;
                     case ConsoleKey.D:
                         xPlayer++;
-                        PlayerSpawn();
+                 //       PlayerSpawn();
                         break;
                 } 
 
