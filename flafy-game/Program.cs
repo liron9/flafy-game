@@ -158,7 +158,7 @@ namespace flafy_game
 
         //This fucntion spawn one pipe with a random hole in ther
         static int xPipe = 179;
-        static void PipePrinter()   // <<<< int pipe 
+        static void PipePrinter()   
         {
             int pipeCounter = 0;
 
@@ -178,10 +178,15 @@ namespace flafy_game
 
 
                             }
+
                         }
                     }
                     pipesInfo[pipeCounter, 1]--;
-
+                    Console.SetCursorPosition(pipesInfo[pipeCounter, 1], 1);
+                    for (int i = 0; i < pipeLeftoverEraser.GetLength(1); i++)
+                    {
+                        Console.Write(pipeLeftoverEraser[0,i]);
+                    }
                 }
                 pipeCounter++;
 
