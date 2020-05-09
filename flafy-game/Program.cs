@@ -30,7 +30,6 @@ namespace flafy_game
         static void PipeMovment(Object source, ElapsedEventArgs e)
         {   
                 PipePrinter();
-                 PlayerSpawn();
 
         }
 
@@ -148,6 +147,7 @@ namespace flafy_game
         static void RandomHole()
         {
             int pipeCounter = 0;
+
             Random randomholeselector = new Random();             
             centerOfHole = randomholeselector.Next(4, 34);                          //הפונקציה הזאת מייצרת פייפ כל 250 מילישניות
                                                                                     //צריך לסרוק את את טבלת המידע ולייצר את הפייפ רק ברגע שמצאנו אפס במיקום של הפייפ
@@ -157,8 +157,8 @@ namespace flafy_game
         }
 
         //This fucntion spawn one pipe with a random hole in ther
-        static int xPipe = 179;
-        static void PipePrinter()   // <<<< int pipe 
+        static int xPipe = 180;
+        static void PipePrinter()   
         {
             int pipeCounter = 0;
 
@@ -166,6 +166,8 @@ namespace flafy_game
             {
                 if (pipesInfo[pipeCounter,1] > 0)
                 {
+                    pipesInfo[pipeCounter, 1]--;
+
                     for (int i = 0; i < pipeView.GetLength(1); i++)
                     {
                         for (int j = 0; j < pipeView.GetLength(0); j++)
@@ -180,8 +182,6 @@ namespace flafy_game
                             }
                         }
                     }
-                    pipesInfo[pipeCounter, 1]--;
-
                 }
                 pipeCounter++;
 
@@ -216,7 +216,7 @@ namespace flafy_game
                     Console.SetCursorPosition(j + xPlayer, i + yPlayer);
                     Console.Write(player[i,j]);
                 }
-                Console.WriteLine(" ");
+                Console.WriteLine();
             }
         }
 
@@ -239,7 +239,7 @@ namespace flafy_game
         //This function is moving the player up,down,right and left 
         static void PlayerMovment()
         {
-            //PlayerSpawn();
+            PlayerSpawn();
 
             int Endless = 0; //this variable will be changed to "when you loss the game"
 
@@ -253,21 +253,21 @@ namespace flafy_game
                 {
                     case ConsoleKey.W:
                         yPlayer--;
-                        //PlayerSpawn();
+                        PlayerSpawn();
                         LeftoversEraser(yPlayer + 5);
                         break;
                     case ConsoleKey.S:
                         yPlayer++;
-                      //  PlayerSpawn();
+                        PlayerSpawn();
                         LeftoversEraser(yPlayer - 1);
                         break;
                     case ConsoleKey.A:
                         xPlayer--;
-                   //     PlayerSpawn();
+                        PlayerSpawn();
                         break;
                     case ConsoleKey.D:
                         xPlayer++;
-                 //       PlayerSpawn();
+                        PlayerSpawn();
                         break;
                 } 
 
