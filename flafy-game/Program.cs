@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Timers;
-namespace flafy_game
+
+namespace flafy_bird
 {
     class Program
     {
@@ -23,9 +24,10 @@ namespace flafy_game
             printPipeTimer.AutoReset = true;
             printPipeTimer.Enabled = true;
         }
+
         static void PipeCreator(Object source, ElapsedEventArgs e)
         {
-                createPipe();
+            createPipe();
         }
         static void GameMovment(Object source, ElapsedEventArgs e)
         {
@@ -148,13 +150,13 @@ namespace flafy_game
 
         static int[,] pipesInfo = new int[6, 2];     //the array that contains the info about the pipes  1 coloum is the random hole and the other coloum is the pipe location.
                                                      // 1 function pickes a random hole              the other function prints the pipe
-        
+
         static int centerOfHole = 0; //the var for the funtiob below
         //This funtion pickes a random hole in a pipe
         static void createPipe()
         {
 
-            Random randomholeselector = new Random();             
+            Random randomholeselector = new Random();
             centerOfHole = randomholeselector.Next(4, 34);                          //הפונקציה הזאת מייצרת פייפ כל 250 מילישניות
                                                                                     //צריך לסרוק את את טבלת המידע ולייצר את הפייפ רק ברגע שמצאנו אפס במיקום של הפייפ
             for (int i = 0; i < pipesInfo.GetLength(0); i++)
@@ -172,13 +174,13 @@ namespace flafy_game
 
         //This fucntion spawn one pipe with a random hole in ther
         static int xPipe = 179;
-        static void PipePrinter()   
+        static void PipePrinter()
         {
             int pipeCounter = 0;
 
             while (pipeCounter < 6)
             {
-                if (pipesInfo[pipeCounter,1] > 0)
+                if (pipesInfo[pipeCounter, 1] > 0)
                 {
                     pipesInfo[pipeCounter, 1]--;
 
@@ -187,7 +189,7 @@ namespace flafy_game
                         for (int j = 0; j < pipeView.GetLength(0); j++)
                         {                                                                  //the pipe is printing only when his X location is 0
 
-                            if (!(j <= pipesInfo[pipeCounter,0] + 3 && j >= pipesInfo[pipeCounter, 0] - 3))
+                            if (!(j <= pipesInfo[pipeCounter, 0] + 3 && j >= pipesInfo[pipeCounter, 0] - 3))
                             {
                                 Console.SetCursorPosition(pipesInfo[pipeCounter, 1], j + 1);
                                 Console.Write(pipeView[j, i]);
@@ -201,7 +203,7 @@ namespace flafy_game
                         for (int j = 0; j < pipeLeftoverEraser.GetLength(0); j++)
                         {
                             Console.SetCursorPosition(pipesInfo[pipeCounter, 1] + 1, j + 1);
-                            Console.Write(pipeLeftoverEraser[j,i]);
+                            Console.Write(pipeLeftoverEraser[j, i]);
                         }
                     }
                 }
@@ -213,11 +215,11 @@ namespace flafy_game
 
         static void EmptryColumPrinter()
         {
-                for (int i = 0; i < pipeLeftoverEraser.GetLength(0); i++)
-                {
-                    Console.SetCursorPosition(0,i + 1);
-                    Console.WriteLine(pipeLeftoverEraser[i,0]);
-                }
+            for (int i = 0; i < pipeLeftoverEraser.GetLength(0); i++)
+            {
+                Console.SetCursorPosition(0, i + 1);
+                Console.WriteLine(pipeLeftoverEraser[i, 0]);
+            }
         }
 
 
@@ -229,11 +231,11 @@ namespace flafy_game
                                    { " ", " ", " ", " ", " ", " ", " ", "‾", "‾", "‾", "‾", "‾", "‾", " " } };
 
         //These are the coordinates of the player spawn 
-        static int xPlayer = 20; 
+        static int xPlayer = 20;
         static int yPlayer = 17;
 
-        static int previuousXPlayer = xPlayer ;
-        static int previuousYPlayer = yPlayer ;
+        static int previuousXPlayer = xPlayer;
+        static int previuousYPlayer = yPlayer;
         //This function spawnes the player in the coordinates that mentioned above
         static void PlayerSpawn()
         {
@@ -243,7 +245,7 @@ namespace flafy_game
                 for (int j = 0; j < player.GetLength(1); j++)
                 {
                     Console.SetCursorPosition(j + xPlayer, i + yPlayer);
-                    Console.Write(player[i,j]);
+                    Console.Write(player[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -251,6 +253,7 @@ namespace flafy_game
 
 
         //This function erae the leftovers from the player when he moves
+
         static void playerClear()
         {
 
@@ -266,20 +269,19 @@ namespace flafy_game
         }
 
         static bool WhenGameIsOver = false;
-        static bool GameOver()
+        static void GameOver()
         {
-            for (int i = 0; i < player.GetLength(0); i++)
+            for (int i = 0; i < pipesInfo.GetLength(0); i++)
             {
-                for (int j = 0; j < player.GetLength(1); j++)
+                if (pipesInfo[i, 1] < xPlayer + player.GetLength(1) && xPlayer <= pipesInfo[i, 1])
                 {
-                    if ((yPlayer < pipesInfo[i,0] -3) || (yPlayer + 4 > pipesInfo[i, 0] + 3)  && (xPipe < xPlayer + 13) && (xPipe > xPlayer))
+                    if (yPlayer < pipesInfo[i, 0] - 3 || yPlayer > pipesInfo[i, 0] + 3)
                     {
                         WhenGameIsOver = true;
-
+                        break;
                     }
                 }
             }
-            return WhenGameIsOver;
         }
 
         //This function is moving the player up,down,right and left 
@@ -287,33 +289,33 @@ namespace flafy_game
         {
             PlayerSpawn();
 
-            int Endless = 0; //this variable will be changed to "when you loss the game"
-
             ConsoleKeyInfo playerKeyInfo;
-            
+
             do
             {
-                playerKeyInfo = Console.ReadKey(true);
-
-                switch (playerKeyInfo.Key)
+                if (Console.KeyAvailable)
                 {
-                    case ConsoleKey.W:
-                        yPlayer--;
-                        break;
-                    case ConsoleKey.S:
-                        yPlayer++;
-                        break;
-                    case ConsoleKey.A:
-                        xPlayer--;
-                        break;
-                    case ConsoleKey.D:
-                        xPlayer++;
-                        break;
-                } 
+                    playerKeyInfo = Console.ReadKey(true);
 
-                
-            } while (Endless == 0);
-            
+                    switch (playerKeyInfo.Key)
+                    {
+                        case ConsoleKey.W:
+                            yPlayer--;
+                            break;
+                        case ConsoleKey.S:
+                            yPlayer++;
+                            break;
+                        case ConsoleKey.A:
+                            xPlayer--;
+                            break;
+                        case ConsoleKey.D:
+                            xPlayer++;
+                            break;
+                    }
+                    GameOver();
+                }
+            } while (!WhenGameIsOver);
+
 
         }
 
@@ -324,6 +326,9 @@ namespace flafy_game
             borders();
             PipesSpawn();
             PlayerMovment();
+
+
+
         }
 
         static void Main(string[] args)
@@ -331,6 +336,13 @@ namespace flafy_game
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
 
+            for (int i = 0; i < pipesInfo.GetLength(0); i++)
+            {
+                for (int j = 0; j < pipesInfo.GetLength(1); j++)
+                {
+                    pipesInfo[i, j] = -1;
+                }
+            }
             ThWholeGame();
         }
     }
