@@ -265,6 +265,23 @@ namespace flafy_game
             }
         }
 
+        static bool WhenGameIsOver = false;
+        static bool GameOver()
+        {
+            for (int i = 0; i < player.GetLength(0); i++)
+            {
+                for (int j = 0; j < player.GetLength(1); j++)
+                {
+                    if ((yPlayer < pipesInfo[i,0] -3) || (yPlayer + 4 > pipesInfo[i, 0] + 3)  && (xPipe < xPlayer + 13) && (xPipe > xPlayer))
+                    {
+                        WhenGameIsOver = true;
+
+                    }
+                }
+            }
+            return WhenGameIsOver;
+        }
+
         //This function is moving the player up,down,right and left 
         static void PlayerMovment()
         {
