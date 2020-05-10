@@ -13,15 +13,17 @@ namespace flafy_game
         //This function creates pipes every 5 seconds
         static void PipesSpawn()
         {
-            newPipeTimer = new System.Timers.Timer(6000);
-            newPipeTimer.Elapsed += PipeCreator;
-            newPipeTimer.AutoReset = true;
-            newPipeTimer.Enabled = true;
 
-            printPipeTimer = new System.Timers.Timer(200);
-            printPipeTimer.Elapsed += GameMovment;
-            printPipeTimer.AutoReset = true;
-            printPipeTimer.Enabled = true;
+                newPipeTimer = new System.Timers.Timer(6000);
+                newPipeTimer.Elapsed += PipeCreator;
+                newPipeTimer.AutoReset = true;
+                newPipeTimer.Enabled = true;
+
+                printPipeTimer = new System.Timers.Timer(200);
+                printPipeTimer.Elapsed += GameMovment;
+                printPipeTimer.AutoReset = true;
+                printPipeTimer.Enabled = true;
+
         }
         static void PipeCreator(Object source, ElapsedEventArgs e)
         {
@@ -172,10 +174,12 @@ namespace flafy_game
 
         //This fucntion spawn one pipe with a random hole in ther
         static int xPipe = 179;
+
+
         static void PipePrinter()   
         {
             int pipeCounter = 0;
-
+            
             while (pipeCounter < 6)
             {
                 if (pipesInfo[pipeCounter,1] > 0)
@@ -269,8 +273,7 @@ namespace flafy_game
         static void PlayerMovment()
         {
             PlayerSpawn();
-
-            int Endless = 0; //this variable will be changed to "when you loss the game"
+            int endless = 0; // gonna change 
 
             ConsoleKeyInfo playerKeyInfo;
             
@@ -295,11 +298,17 @@ namespace flafy_game
                 } 
 
                 
-            } while (Endless == 0);
+            } while (endless == 0);
             
 
         }
 
+        //this function knoows when you failed the game and end it
+        static void GameOver()
+        {
+
+
+        }
         //This fucntion contains all the other functions and running the game
         static void ThWholeGame()
         {
