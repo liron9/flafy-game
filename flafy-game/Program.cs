@@ -158,8 +158,8 @@ namespace flafy_bird
         {
 
             Random randomholeselector = new Random();
-            centerOfHole = randomholeselector.Next(4, 34);                          //הפונקציה הזאת מייצרת פייפ כל 250 מילישניות
-                                                                                    //צריך לסרוק את את טבלת המידע ולייצר את הפייפ רק ברגע שמצאנו אפס במיקום של הפייפ
+            centerOfHole = randomholeselector.Next(4, 34);                          
+                                                                                    
             for (int i = 0; i < pipesInfo.GetLength(0); i++)
             {
                 if (pipesInfo[i, 1] <= 0)
@@ -212,6 +212,7 @@ namespace flafy_bird
 
             }
             GameOver();
+
         }
 
         static void EmptryColumPrinter()
@@ -282,8 +283,16 @@ namespace flafy_bird
                         break;
                     }
                 }
+
+                if ((yPlayer == 0) || yPlayer + player.GetLength(0) == 40)
+                {
+                    WhenGameIsOver = true;
+                    break;
+                }
             }
+
         }
+
 
         //This function is moving the player up,down,right and left 
         static void PlayerMovment()
@@ -328,7 +337,6 @@ namespace flafy_bird
             PlayerMovment();
 
 
-
         }
 
         static void Main(string[] args)
@@ -344,6 +352,7 @@ namespace flafy_bird
                 }
             }
             ThWholeGame();
+
         }
     }
 }
